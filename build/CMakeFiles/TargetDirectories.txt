@@ -1,0 +1,3 @@
+/Users/jp-ai/Documents/Proyectos_Pablo/NeuroTrace/build/CMakeFiles/NeuroTrace.dir
+/Users/jp-ai/Documents/Proyectos_Pablo/NeuroTrace/build/CMakeFiles/edit_cache.dir
+/Users/jp-ai/Documents/Proyectos_Pablo/NeuroTrace/build/CMakeFiles/rebuild_cache.dir
