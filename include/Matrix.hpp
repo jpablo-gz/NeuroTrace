@@ -16,54 +16,58 @@ private:
 
 public:
     // Constructor
-    Matrix(std::size_t rows, std::size_t columns): rows_(rows), columns_(columns){
-        // Check for zero dimensions
+    explicit Matrix(std::size_t rows, std::size_t columns): rows_(rows), columns_(columns){
+        // Las dimensiones deben ser mayores que cero
         if (rows_ == 0 || columns_ == 0){
             throw DimensionError(
-                "(Matrix) Dimensions must be greater than zero."
+                "(Matrix) Las dimensiones deben ser mayores que cero."
             );
         }
 
-        // Check potential overflow when calculating the total number of elements
+        // Posible overflow si las dimensiones son demasiado grandes
         if (rows_ > data_.max_size() / columns_){
-            throw DimensionError("(Matrix) Dimensions are too large.");
+            throw DimensionError(
+                "(Matrix) Las dimensiones son demasiado grandes."
+            );
         }
 
         data_.resize(rows_ * columns_);
     }
 
-    // Access to an element for reading and writing.
+    // usamos un operador de llamada a función para acceder a los elementos de la matriz.
+
+    // Accede a un elemento para lectura y escritura.
     T& operator()(std::size_t row, std::size_t column){
 
-        // Check for out-of-bounds access
+        // Verificar que el indice esté dentro de los límites
         if (row >= rows_ || column >= columns_){
-            throw IndexError("(Matrix) Index out of bounds.");
+            throw IndexError("(Matrix) Indice fuera de los límites.");
         }
 
         return data_[row * columns_ + column];
     }
 
-    // Access to an element for reading only.
+    // Accede a un elemento para solo lectura.
     const T& operator()(std::size_t row, std::size_t column) const {
 
-        // Check for out-of-bounds access
+        // Verificar que el indice esté dentro de los límites
         if (row >= rows_ || column >= columns_){
-            throw IndexError("(Matrix) Index out of bounds.");
+            throw IndexError("(Matrix) Indice fuera de los límites.");
         }
 
         return data_[row * columns_ + column];
     }
 
-    // Print the dimensions and values of the matrix.
+    // Imprime la matriz y sus datos en la terminal. 
     friend std::ostream& operator<<(std::ostream& output, const Matrix<T>& matrix) {
-        output << "Matrix ("<< matrix.rows_ << "x" << matrix.columns_<< "):\n";
+        output << "Matrix ("<< matrix.rows_ << "x" << matrix.columns_<< "):" << std::endl;
 
         for (std::size_t row = 0; row < matrix.rows_; ++row){
             for (std::size_t column = 0; column < matrix.columns_; ++column){
                 output << matrix(row, column) << ' ';
             }
 
-            output << '\n';
+            output << std::endl;
         }
 
         return output;
